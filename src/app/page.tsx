@@ -1,53 +1,59 @@
-import Link from "next/link";
+"use client"
 
-import { LatestPost } from "~/app/_components/post";
-import { api, HydrateClient } from "~/trpc/server";
+import { ScrambleText } from "@/components/scramble-text"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
+const navigation = [
+  {
+    name: "Blog",
+    href: "/blog",
+    description: "Read my thoughts and experiences",
+  },
+  {
+    name: "GitHub Analysis",
+    href: "/github-analysis",
+    description: "Analyze GitHub repositories and users",
+  },
+  {
+    name: "Experimental Arcade",
+    href: "/experimental-arcade",
+    description: "Play with experimental web technologies",
+  },
+]
 
-  void api.post.getLatest.prefetch();
-
+export default function Home() {
   return (
-    <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
-          </div>
-
-          <LatestPost />
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-4xl">
+        <div className="h-24 mb-8 flex justify-center items-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl sm:text-6xl font-bold text-center"
+          >
+            <ScrambleText text="Welcome to My Space" delay={500} />
+          </motion.h1>
         </div>
-      </main>
-    </HydrateClient>
-  );
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {navigation.map((item) => (
+            <Link key={item.name} href={item.href} className="no-underline">
+              <Card className="h-full transition-all duration-300 hover:shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl sm:text-2xl text-foreground">{item.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{item.description}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
 }
+
