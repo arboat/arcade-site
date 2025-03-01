@@ -6,9 +6,19 @@ interface ScrambleTextProps {
   text: string
   delay?: number
   className?: string
+  textColor?: string
+  backgroundColor?: string
+  fontSize?: string
+  fontWeight?: string | number
+  padding?: string
+  style?: React.CSSProperties
 }
 
-export function ScrambleText({ text, delay = 0, className = "" }: ScrambleTextProps) {
+export function ScrambleText({ 
+  text, 
+  delay = 0, 
+  className = "",
+}: ScrambleTextProps) {
   const [displayText, setDisplayText] = useState("")
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+"
 
@@ -18,7 +28,7 @@ export function ScrambleText({ text, delay = 0, className = "" }: ScrambleTextPr
 
     const startAnimation = () => {
       interval = setInterval(() => {
-        setDisplayText((current) => {
+        setDisplayText(() => {
           const result = text
             .split("")
             .map((letter, index) => {
@@ -47,6 +57,12 @@ export function ScrambleText({ text, delay = 0, className = "" }: ScrambleTextPr
     }
   }, [text, delay])
 
-  return <span className={className}>{displayText}</span>
+  return (
+    <span 
+      className={className}
+    >
+      {displayText}
+    </span>
+  )
 }
 

@@ -11,8 +11,8 @@ import "./globals.css"
 import type React from "react"
 
 export const metadata: Metadata = {
-  title: "My Personal Website",
-  description: "A personal website with a blog and GitHub analysis tool",
+  title: "arcade-arboat",
+  description: "A personal website of some interesting stuff",
 }
 
 export default function RootLayout({
@@ -35,7 +35,7 @@ export default function RootLayout({
                   <div className="w-[40px] flex justify-center">
                     <ThemeSwitcher />
                   </div>
-                  <div className="w-[40px] flex justify-center">
+                  <div className="w-[64px] flex justify-center">
                     <UserButton />
                   </div>
                 </div>
