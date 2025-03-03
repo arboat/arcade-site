@@ -3,5 +3,4 @@ compatibility_date = "2025-03-04"
 compatibility_flags = ["nodejs_compat_v2"]
 pages_build_output_dir = ".vercel/output/static"
 
-[vars]
-node_version = "23.4.0" 
+
